@@ -809,8 +809,8 @@ function translitteration($texte, $charset='AUTO', $complexe='') {
 /**
  * Translittération complexe
  *
- * `&agrave;` est retourné sous la forme "a`" et pas "a"
- * mais si `$chiffre=true`, on retourne "a8" (vietnamien)
+ * `&agrave;` est retourné sous la forme ``a` `` et pas `à`
+ * mais si `$chiffre=true`, on retourne `a8` (vietnamien)
  * 
  * @uses translitteration()
  * @param string $texte
