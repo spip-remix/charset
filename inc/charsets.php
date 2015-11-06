@@ -199,14 +199,14 @@ function plage_punct_unicode() {
  * Cf. charsets/iso-8859-1.php (qu'on recopie ici pour aller plus vite)
  * On peut passer un charset cible en parametre pour accelerer le passage iso-8859-1 -> autre charset
  *
- * @param string $texte
+ * @param string|array $texte
  *     Le texte à corriger
  * @param string $charset
  *     Charset d'origine du texte
  *     Par défaut (AUTO) utilise le charset du site
  * @param string $charset_cible
  *     Charset de destination (unicode par défaut)
- * @return string
+ * @return string|array
  *     Texte corrigé
 **/
 function corriger_caracteres_windows($texte, $charset='AUTO', $charset_cible='unicode') {
