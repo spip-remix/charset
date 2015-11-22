@@ -209,7 +209,7 @@ function plage_punct_unicode() {
  * @return string|array
  *     Texte corrigé
 **/
-function corriger_caracteres_windows($texte, $charset='AUTO', $charset_cible='unicode') {
+function corriger_caracteres_windows($texte, $charset = 'AUTO', $charset_cible = 'unicode') {
 	static $trans;
 
 	if (is_array($texte)) {
@@ -287,7 +287,7 @@ function corriger_caracteres_windows($texte, $charset='AUTO', $charset_cible='un
  * @return string
  *     Texte converti
 **/
-function html2unicode($texte, $secure=false) {
+function html2unicode($texte, $secure = false) {
 	if (strpos($texte,'&') === false) return $texte;
 	static $trans = array();
 	if (!$trans) {
@@ -348,7 +348,7 @@ function mathml2unicode($texte) {
  * @return string
  *     Texte converti en unicode
 **/
-function charset2unicode($texte, $charset='AUTO' /* $forcer: obsolete*/) {
+function charset2unicode($texte, $charset = 'AUTO' /* $forcer: obsolete*/) {
 	static $trans;
 
 	if ($charset == 'AUTO') {
@@ -419,7 +419,7 @@ function charset2unicode($texte, $charset='AUTO' /* $forcer: obsolete*/) {
  * @return string
  *     Texte transformé dans le charset souhaité
 **/
-function unicode2charset($texte, $charset='AUTO') {
+function unicode2charset($texte, $charset = 'AUTO') {
 	static $CHARSET_REVERSE;
 	static $trans = array();
 
@@ -759,7 +759,7 @@ function javascript_to_binary ($texte) {
  * @param string $complexe
  * @return string
  */
-function translitteration_rapide($texte, $charset='AUTO', $complexe='') {
+function translitteration_rapide($texte, $charset = 'AUTO', $complexe = '') {
 	static $trans;
 	if ($charset == 'AUTO')
 		$charset = $GLOBALS['meta']['charset'];
@@ -795,7 +795,7 @@ function translitteration_rapide($texte, $charset='AUTO', $complexe='') {
  * @param string $complexe
  * @return string
  */
-function translitteration($texte, $charset='AUTO', $complexe='') {
+function translitteration($texte, $charset = 'AUTO', $complexe = '') {
 	// 0. Supprimer les caracteres illegaux
 	include_spip('inc/filtres');
 	$texte = corriger_caracteres($texte);
@@ -817,7 +817,7 @@ function translitteration($texte, $charset='AUTO', $complexe='') {
  * @param bool $chiffres
  * @return string
  */
-function translitteration_complexe($texte, $chiffres=false) {
+function translitteration_complexe($texte, $chiffres = false) {
 	$texte = translitteration($texte,'AUTO','complexe');
 
 	if ($chiffres) {
@@ -909,7 +909,7 @@ function is_ascii($string) {
  * @return string
  *     Texte transcodé dans le charset du site
 **/
-function transcoder_page($texte, $headers='') {
+function transcoder_page($texte, $headers = '') {
 
 	// Si tout est < 128 pas la peine d'aller plus loin
 	if (is_ascii($texte)) {
@@ -976,7 +976,7 @@ function transcoder_page($texte, $headers='') {
  * @return string
  *     Le texte coupé
 **/
-function spip_substr($c, $start=0, $length = NULL) {
+function spip_substr($c, $start = 0, $length = NULL) {
 	// Si ce n'est pas utf-8, utiliser substr
 	if ($GLOBALS['meta']['charset'] != 'utf-8') {
 		if ($length)
