@@ -26,7 +26,7 @@ load_charset('iso-8859-1');
 
 $trans = $GLOBALS['CHARSET']['iso-8859-1'];
 
-$mod = Array(
+$mod = array(
 	0xA0 => 0x00A0,
 	0xA4 => 0x00A4,
 	0xAC => 0x060C,

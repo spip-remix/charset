@@ -97,13 +97,13 @@ function init_mb_string() {
 	// et que le charset interne est connu de mb_string
 	if (!$mb) {
 		if (function_exists('mb_internal_encoding')
-			AND function_exists('mb_detect_order')
-			AND function_exists('mb_substr')
-			AND function_exists('mb_strlen')
-			AND function_exists('mb_encode_mimeheader')
-			AND function_exists('mb_encode_numericentity')
-			AND function_exists('mb_decode_numericentity')
-			AND mb_detect_order(lire_config('charset', _DEFAULT_CHARSET))
+			and function_exists('mb_detect_order')
+			and function_exists('mb_substr')
+			and function_exists('mb_strlen')
+			and function_exists('mb_encode_mimeheader')
+			and function_exists('mb_encode_numericentity')
+			and function_exists('mb_decode_numericentity')
+			and mb_detect_order(lire_config('charset', _DEFAULT_CHARSET))
 		) {
 			mb_internal_encoding('utf-8');
 			$mb = 1;
@@ -403,7 +403,7 @@ function charset2unicode($texte, $charset = 'AUTO' /* $forcer: obsolete*/) {
 			// mbstring presente ?
 			if (init_mb_string()) {
 				if ($order = mb_detect_order() # mb_string connait-il $charset?
-					AND mb_detect_order($charset)
+					and mb_detect_order($charset)
 				) {
 					$s = mb_convert_encoding($texte, 'utf-8', $charset);
 					if ($s && $s != $texte) {
@@ -416,7 +416,7 @@ function charset2unicode($texte, $charset = 'AUTO' /* $forcer: obsolete*/) {
 			// Sinon, peut-etre connaissons-nous ce charset ?
 			if (!isset($trans[$charset])) {
 				if ($cset = load_charset($charset)
-					AND is_array($GLOBALS['CHARSET'][$cset])
+					and is_array($GLOBALS['CHARSET'][$cset])
 				) {
 					foreach ($GLOBALS['CHARSET'][$cset] as $key => $val) {
 						$trans[$charset][chr($key)] = '&#' . $val . ';';
@@ -521,7 +521,7 @@ function importer_charset($texte, $charset = 'AUTO') {
 		$texte = corriger_caracteres_windows($texte, 'iso-8859-1', $GLOBALS['meta']['charset']);
 		if (init_mb_string()) {
 			if ($order = mb_detect_order() # mb_string connait-il $charset?
-				AND mb_detect_order($charset)
+				and mb_detect_order($charset)
 			) {
 				$s = mb_convert_encoding($texte, 'utf-8', $charset);
 			}
@@ -531,7 +531,7 @@ function importer_charset($texte, $charset = 'AUTO') {
 		// Sinon, peut-etre connaissons-nous ce charset ?
 		if (!isset($trans[$charset])) {
 			if ($cset = load_charset($charset)
-				AND is_array($GLOBALS['CHARSET'][$cset])
+				and is_array($GLOBALS['CHARSET'][$cset])
 			) {
 				foreach ($GLOBALS['CHARSET'][$cset] as $key => $val) {
 					$trans[$charset][chr($key)] = unicode2charset('&#' . $val . ';');
@@ -740,7 +740,7 @@ function unicode_to_utf_8($texte) {
 	if (preg_match_all(',&#0*([1-9][0-9][0-9]+);,S',
 		$texte, $regs, PREG_SET_ORDER)) {
 		foreach ($regs as $reg) {
-			if ($reg[1] > 127 AND !isset($vu[$reg[0]])) {
+			if ($reg[1] > 127 and !isset($vu[$reg[0]])) {
 				$vu[$reg[0]] = caractere_utf_8($reg[1]);
 			}
 		}
@@ -772,7 +772,7 @@ function unicode_to_utf_8($texte) {
  **/
 function unicode_to_javascript($texte) {
 	$vu = array();
-	while (preg_match(',&#0*([0-9]+);,S', $texte, $regs) AND !isset($vu[$regs[1]])) {
+	while (preg_match(',&#0*([0-9]+);,S', $texte, $regs) and !isset($vu[$regs[1]])) {
 		$num = $regs[1];
 		$vu[$num] = true;
 		$s = '\u' . sprintf("%04x", $num);
@@ -1004,7 +1004,7 @@ function transcoder_page($texte, $headers = '') {
 					',<(meta|html|body)[^>]*charset[^>]*=[^>]*([-_a-z0-9]+?),UimsS',
 					$texte, $regs)
 				# eviter #CHARSET des squelettes
-				AND (($tmp = trim(strtolower($regs[2]))) != 'charset')
+				and (($tmp = trim(strtolower($regs[2]))) != 'charset')
 			) {
 				$charset = $tmp;
 			} // charset de la reponse http
@@ -1188,18 +1188,18 @@ function spip_strlen($c) {
 }
 
 // Initialisation
-$GLOBALS['CHARSET'] = Array();
+$GLOBALS['CHARSET'] = array();
 
 // noter a l'occasion dans la meta pcre_u notre capacite a utiliser le flag /u
 // dans les preg_replace pour ne pas casser certaines lettres accentuees :
 // en utf-8 chr(195).chr(160) = a` alors qu'en iso-latin chr(160) = nbsp
 if (!isset($GLOBALS['meta']['pcre_u'])
-	OR (isset($_GET['var_mode']) AND !isset($_GET['var_profile']))
+	or (isset($_GET['var_mode']) and !isset($_GET['var_profile']))
 ) {
 	include_spip('inc/meta');
 	ecrire_meta('pcre_u',
 		$u = (lire_config('charset', _DEFAULT_CHARSET)
-			AND test_pcre_unicode())
+			and test_pcre_unicode())
 			? 'u' : ''
 	);
 }
