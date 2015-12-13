@@ -1692,5 +1692,3 @@ $GLOBALS['CHARSET']['mathml'] = array(
 	'zscr' => '&#xE4F7;'
 
 );
-
-?>

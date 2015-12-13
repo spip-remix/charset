@@ -85,5 +85,3 @@ foreach ($mod as $num => $val) {
 }
 
 $GLOBALS['CHARSET']['iso-8859-6'] = $trans;
-
-?>

@@ -1231,6 +1231,3 @@ function utf8_noplanes($x) {
 
 	return $x;
 }
-
-
-?>

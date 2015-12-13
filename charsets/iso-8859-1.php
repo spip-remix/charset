@@ -142,5 +142,3 @@ $GLOBALS['CHARSET']['iso-8859-1'] = array(
 	255 => 255
 
 );
-
-?>

@@ -139,5 +139,3 @@ $GLOBALS['CHARSET']['cp1256'] = array(
 	0xFE => 0x200F,
 	0xFF => 0x06D2
 );
-
-?>

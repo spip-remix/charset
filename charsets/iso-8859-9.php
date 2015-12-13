@@ -33,5 +33,3 @@ $trans[254] = 351; //scedil
 $trans[222] = 350; //Scedil
 
 $GLOBALS['CHARSET']['iso-8859-9'] = $trans;
-
-?>

@@ -176,5 +176,3 @@ foreach ($translit_c as $u => $t) {
 	$trans[$u] = $t;
 }
 $GLOBALS['CHARSET']['translitcomplexe'] = $trans;
-
-?>

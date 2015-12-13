@@ -35,5 +35,3 @@ $trans[189] = 339;
 $trans[190] = 376;
 
 $GLOBALS['CHARSET']['iso-8859-15'] = $trans;
-
-?>

@@ -391,6 +391,3 @@ $GLOBALS['CHARSET']['translit'] = array(
 	273 => "d"
 
 );
-
-
-?>

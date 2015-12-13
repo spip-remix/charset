@@ -127,5 +127,4 @@ $GLOBALS['CHARSET']['html'] = array(
 
 ## caracteres tres speciaux a ne pas convertir
 #'amp' => '&', 'quot' => '"', 'lt' => '<', 'gt' => '>',
-
-?>
+;
