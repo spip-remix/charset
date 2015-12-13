@@ -633,10 +633,10 @@ function utf_8_to_unicode($source) {
 			while ($thisPos < $thisLen) {
 				$thisCharOrd = ord(substr($thisLetter, $thisPos, 1));
 				if ($thisPos == 0) {
-					$charNum = intval($thisCharOrd-$decrement[$thisLen]);
+					$charNum = intval($thisCharOrd - $decrement[$thisLen]);
 					$decimalCode += ($charNum << $shift[$thisLen][$thisPos]);
 				} else {
-					$charNum = intval($thisCharOrd-128);
+					$charNum = intval($thisCharOrd - 128);
 					$decimalCode += ($charNum << $shift[$thisLen][$thisPos]);
 				}
 				$thisPos++;
@@ -713,13 +713,13 @@ function caractere_utf_8($num) {
 		return chr($num);
 	}
 	if ($num < 2048) {
-		return chr(($num >> 6)+192) . chr(($num & 63)+128);
+		return chr(($num >> 6) + 192) . chr(($num & 63) + 128);
 	}
 	if ($num < 65536) {
-		return chr(($num >> 12)+224) . chr((($num >> 6) & 63)+128) . chr(($num & 63)+128);
+		return chr(($num >> 12) + 224) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
 	}
 	if ($num < 1114112) {
-		return chr(($num >> 18)+240) . chr((($num >> 12) & 63)+128) . chr((($num >> 6) & 63)+128) . chr(($num & 63)+128);
+		return chr(($num >> 18) + 240) . chr((($num >> 12) & 63) + 128) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
 	}
 
 	return '';
@@ -1105,7 +1105,7 @@ function spip_substr_manuelle($c, $start, $length = null) {
 	if ($start > 0) {
 		$c = substr($c, strlen(spip_substr_manuelle($c, 0, $start)));
 	} elseif ($start < 0) {
-		return spip_substr_manuelle($c, spip_strlen($c)+$start, $length);
+		return spip_substr_manuelle($c, spip_strlen($c) + $start, $length);
 	}
 
 	if (!$length) {
@@ -1119,17 +1119,17 @@ function spip_substr_manuelle($c, $start, $length = null) {
 		while (preg_match(',[\x80-\xBF]{' . (++$n) . '},', $c)) {
 			;
 		}
-		$c = substr($c, 0, $n*$length);
+		$c = substr($c, 0, $n * $length);
 		// puis, tant qu'on est trop long, on coupe...
 		while (($l = spip_strlen($c)) > $length) {
-			$c = substr($c, 0, $length-$l);
+			$c = substr($c, 0, $length - $l);
 		}
 
 		return $c;
 	}
 
 	// $length < 0
-	return spip_substr_manuelle($c, 0, spip_strlen($c)+$length);
+	return spip_substr_manuelle($c, 0, spip_strlen($c) + $length);
 }
 
 /**
