@@ -291,9 +291,8 @@ function html2unicode($texte, $secure = false) {
 	if (strpos($texte,'&') === false) return $texte;
 	static $trans = array();
 	if (!$trans) {
-		global $CHARSET;
 		load_charset('html');
-		foreach ($CHARSET['html'] as $key => $val) {
+		foreach ($GLOBALS['CHARSET']['html'] as $key => $val) {
 			$trans["&$key;"] = $val;
 		}
 	}
@@ -320,10 +319,9 @@ function html2unicode($texte, $secure = false) {
 function mathml2unicode($texte) {
 	static $trans;
 	if (!$trans) {
-		global $CHARSET;
 		load_charset('mathml');
 
-		foreach ($CHARSET['mathml'] as $key => $val)
+		foreach ($GLOBALS['CHARSET']['mathml'] as $key => $val)
 			$trans["&$key;"] = $val;
 	}
 
@@ -380,10 +378,9 @@ function charset2unicode($texte, $charset = 'AUTO' /* $forcer: obsolete*/) {
 
 		// Sinon, peut-etre connaissons-nous ce charset ?
 		if (!isset($trans[$charset])) {
-			global $CHARSET;
 			if ($cset = load_charset($charset)
-			AND is_array($CHARSET[$cset]))
-				foreach ($CHARSET[$cset] as $key => $val) {
+			AND is_array($GLOBALS['CHARSET'][$cset]))
+				foreach ($GLOBALS['CHARSET'][$cset] as $key => $val) {
 					$trans[$charset][chr($key)] = '&#'.$val.';';
 			}
 		}
@@ -489,10 +486,9 @@ function importer_charset($texte, $charset = 'AUTO') {
 		}
 		// Sinon, peut-etre connaissons-nous ce charset ?
 		if (!isset($trans[$charset])) {
-			global $CHARSET;
 			if ($cset = load_charset($charset)
-			AND is_array($CHARSET[$cset]))
-				foreach ($CHARSET[$cset] as $key => $val) {
+			AND is_array($GLOBALS['CHARSET'][$cset]))
+				foreach ($GLOBALS['CHARSET'][$cset] as $key => $val) {
 					$trans[$charset][chr($key)] = unicode2charset('&#'.$val.';');
 			}
 		}
@@ -770,9 +766,8 @@ function translitteration_rapide($texte, $charset = 'AUTO', $complexe = '') {
 
 	// 2. Translitterer grace a la table predefinie
 	if (!$trans[$complexe]) {
-		global $CHARSET;
 		load_charset($table_translit);
-		foreach ($CHARSET[$table_translit] as $key => $val)
+		foreach ($GLOBALS['CHARSET'][$table_translit] as $key => $val)
 			$trans[$complexe][caractere_utf_8($key)] = $val;
 	}
 
