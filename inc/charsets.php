@@ -1198,7 +1198,7 @@ if (!isset($GLOBALS['meta']['pcre_u'])
 ) {
 	include_spip('inc/meta');
 	ecrire_meta('pcre_u',
-		$u = (lire_config('charset', _DEFAULT_CHARSET)
+		$u = (lire_config('charset', _DEFAULT_CHARSET) == 'utf-8'
 			and test_pcre_unicode())
 			? 'u' : ''
 	);
