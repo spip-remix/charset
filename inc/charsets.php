@@ -100,6 +100,7 @@ function init_mb_string() {
 			and function_exists('mb_detect_order')
 			and function_exists('mb_substr')
 			and function_exists('mb_strlen')
+			and function_exists('mb_strtolower')
 			and function_exists('mb_encode_mimeheader')
 			and function_exists('mb_encode_numericentity')
 			and function_exists('mb_decode_numericentity')
@@ -1155,6 +1156,29 @@ function spip_ucfirst($c) {
 	$lettre1 = mb_strtoupper(spip_substr($c, 0, 1));
 
 	return $lettre1 . spip_substr($c, 1);
+}
+
+/**
+ * Passe une chaîne utf-8 en minuscules
+ *
+ * Version utf-8 de strtolower
+ *
+ * @param string $c
+ *     La chaîne à transformer
+ * @return string
+ *     La chaîne en minuscules
+ */
+function spip_strtolower($c) {
+	// Si ce n'est pas utf-8, utiliser strtolower 
+	if ($GLOBALS['meta']['charset'] != 'utf-8') {
+		return strtolower($c);
+	}
+	// Si on n'a pas mb_* on utilise strtolower
+	if (!init_mb_string()) {
+		return strtolower($c);
+	}
+
+	return mb_strtolower($c);
 }
 
 /**
