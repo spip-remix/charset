@@ -1145,12 +1145,8 @@ function spip_substr_manuelle($c, $start, $length = null) {
  *     La chaîne avec une majuscule sur le premier mot
  */
 function spip_ucfirst($c) {
-	// Si ce n'est pas utf-8, utiliser ucfirst 
-	if ($GLOBALS['meta']['charset'] != 'utf-8') {
-		return ucfirst($c);
-	}
-	// Si on n'a pas mb_* on utilise ucfirst
-	if (!init_mb_string()) {
+	// Si on n'a pas mb_* ou si ce n'est pas utf-8, utiliser ucfirst
+	if (!init_mb_string() or $GLOBALS['meta']['charset'] != 'utf-8') {
 		return ucfirst($c);
 	}
 
@@ -1170,12 +1166,8 @@ function spip_ucfirst($c) {
  *     La chaîne en minuscules
  */
 function spip_strtolower($c) {
-	// Si ce n'est pas utf-8, utiliser strtolower 
-	if ($GLOBALS['meta']['charset'] != 'utf-8') {
-		return strtolower($c);
-	}
-	// Si on n'a pas mb_* on utilise strtolower
-	if (!init_mb_string()) {
+	// Si on n'a pas mb_* ou si ce n'est pas utf-8, utiliser strtolower 
+	if (!init_mb_string() or $GLOBALS['meta']['charset'] != 'utf-8') {
 		return strtolower($c);
 	}
 
