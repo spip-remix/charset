@@ -101,6 +101,7 @@ function init_mb_string() {
 			and function_exists('mb_substr')
 			and function_exists('mb_strlen')
 			and function_exists('mb_strtolower')
+			and function_exists('mb_strtoupper')
 			and function_exists('mb_encode_mimeheader')
 			and function_exists('mb_encode_numericentity')
 			and function_exists('mb_decode_numericentity')
