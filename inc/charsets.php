@@ -855,6 +855,9 @@ function translitteration_rapide($texte, $charset = 'AUTO', $complexe = '') {
 /**
  * Translittération charset => ascii (pour l'indexation)
  *
+ * Permet, entre autres, d’enlever les accents, 
+ * car la table ASCII non étendue ne les comporte pas.
+ *
  * Attention les caractères non reconnus sont renvoyés en utf-8
  *
  * @uses corriger_caracteres()
