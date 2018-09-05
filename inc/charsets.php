@@ -897,8 +897,11 @@ function translitteration_complexe($texte, $chiffres = false) {
 	$texte = translitteration($texte, 'AUTO', 'complexe');
 
 	if ($chiffres) {
-		$texte = preg_replace("/[aeiuoyd]['`?~.^+(-]{1,2}/eS",
-			"translitteration_chiffree('\\0')", $texte);
+		$texte = preg_replace_callback(
+			"/[aeiuoyd]['`?~.^+(-]{1,2}/S",
+			function($m) { return translitteration_chiffree($m[0]); },
+			$texte
+		);
 	}
 
 	return $texte;
