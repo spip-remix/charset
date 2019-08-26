@@ -831,7 +831,7 @@ function javascript_to_binary($texte) {
  * @return string
  */
 function translitteration_rapide($texte, $charset = 'AUTO', $complexe = '') {
-	static $trans;
+	static $trans = [];
 	if ($charset == 'AUTO') {
 		$charset = $GLOBALS['meta']['charset'];
 	}
@@ -842,7 +842,8 @@ function translitteration_rapide($texte, $charset = 'AUTO', $complexe = '') {
 	$table_translit = 'translit' . $complexe;
 
 	// 2. Translitterer grace a la table predefinie
-	if (!$trans[$complexe]) {
+	if (!isset($trans[$complexe])) {
+		$trans[$complexe] = [];
 		load_charset($table_translit);
 		foreach ($GLOBALS['CHARSET'][$table_translit] as $key => $val) {
 			$trans[$complexe][caractere_utf_8($key)] = $val;
