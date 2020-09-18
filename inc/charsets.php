@@ -462,7 +462,7 @@ function charset2unicode($texte, $charset = 'AUTO' /* $forcer: obsolete*/) {
  *     Texte transformé dans le charset souhaité
  **/
 function unicode2charset($texte, $charset = 'AUTO') {
-	static $CHARSET_REVERSE;
+	static $CHARSET_REVERSE = array();
 	static $trans = array();
 
 	if ($charset == 'AUTO') {
@@ -477,7 +477,7 @@ function unicode2charset($texte, $charset = 'AUTO') {
 		default:
 			$charset = load_charset($charset);
 
-			if (!is_array($CHARSET_REVERSE[$charset])) {
+			if (empty($CHARSET_REVERSE[$charset])) {
 				$CHARSET_REVERSE[$charset] = array_flip($GLOBALS['CHARSET'][$charset]);
 			}
 
