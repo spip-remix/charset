@@ -998,34 +998,29 @@ function transcoder_page($texte, $headers = '') {
 		return $texte;
 	}
 
-	// Reconnaitre le BOM utf-8 (0xEFBBBF)
 	if (bom_utf8($texte)) {
+		// Reconnaitre le BOM utf-8 (0xEFBBBF)
 		$charset = 'utf-8';
 		$texte = substr($texte, 3);
-	} // charset precise par le contenu (xml)
-	else {
-		if (preg_match(
-			',<[?]xml[^>]*encoding[^>]*=[^>]*([-_a-z0-9]+?),UimsS', $texte, $regs)) {
-			$charset = trim(strtolower($regs[1]));
-		} // charset precise par le contenu (html)
-		else {
-			if (preg_match(
-					',<(meta|html|body)[^>]*charset[^>]*=[^>]*([-_a-z0-9]+?),UimsS',
-					$texte, $regs)
-				# eviter #CHARSET des squelettes
-				and (($tmp = trim(strtolower($regs[2]))) != 'charset')
-			) {
-				$charset = $tmp;
-			} // charset de la reponse http
-			else {
-				if (preg_match(',charset=([-_a-z0-9]+),i', $headers, $regs)) {
-					$charset = trim(strtolower($regs[1]));
-				} else {
-					$charset = '';
-				}
-			}
-		}
+	} elseif (preg_match(',<[?]xml[^>]*encoding[^>]*=[^>]*([-_a-z0-9]+?),UimsS', $texte, $regs)) {
+		// charset precise par le contenu (xml)
+		$charset = trim(strtolower($regs[1]));
+	} elseif (
+		// charset precise par le contenu (html)
+		preg_match(',<(meta|html|body)[^>]*charset[^>]*=[^>]*([#-_a-z0-9]+?),UimsS', $texte, $regs)
+		# eviter toute balise SPIP tel que #CHARSET ou #CONFIG d'un squelette
+		and false === strpos($regs[2], '#')
+		and $tmp = trim(strtolower($regs[2]))
+	) {
+		$charset = $tmp;
+	} elseif (preg_match(',charset=([-_a-z0-9]+),i', $headers, $regs)) {
+		// charset de la reponse http
+		$charset = trim(strtolower($regs[1]));
+	} else {
+		$charset = '';
 	}
+
+
 	// normaliser les noms du shif-jis japonais
 	if (preg_match(',^(x|shift)[_-]s?jis$,i', $charset)) {
 		$charset = 'shift-jis';
