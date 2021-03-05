@@ -404,20 +404,27 @@ function charset2unicode($texte, $charset = 'AUTO' /* $forcer: obsolete*/) {
 		default:
 			// mbstring presente ?
 			if (init_mb_string()) {
-				if ($order = mb_detect_order() # mb_string connait-il $charset?
-					and mb_detect_order($charset)
-				) {
-					$s = mb_convert_encoding($texte, 'utf-8', $charset);
-					if ($s && $s != $texte) {
-						return utf_8_to_unicode($s);
+				$order = mb_detect_order();
+				try {
+					# mb_string connait-il $charset?
+					if ($order and mb_detect_order($charset)) {
+						$s = mb_convert_encoding($texte, 'utf-8', $charset);
+						if ($s && $s != $texte) {
+							return utf_8_to_unicode($s);
+						}
 					}
+					
+				} catch (\Error $e) {
+					// Le charset n'existe probablement pas
+				} finally {
+					mb_detect_order($order); # remettre comme precedemment
 				}
-				mb_detect_order($order); # remettre comme precedemment
 			}
 
 			// Sinon, peut-etre connaissons-nous ce charset ?
 			if (!isset($trans[$charset])) {
-				if ($cset = load_charset($charset)
+				if (
+					$cset = load_charset($charset)
 					and is_array($GLOBALS['CHARSET'][$cset])
 				) {
 					foreach ($GLOBALS['CHARSET'][$cset] as $key => $val) {
@@ -425,7 +432,7 @@ function charset2unicode($texte, $charset = 'AUTO' /* $forcer: obsolete*/) {
 					}
 				}
 			}
-			if (count($trans[$charset])) {
+			if (isset($trans[$charset]) and count($trans[$charset])) {
 				return str_replace(array_keys($trans[$charset]), array_values($trans[$charset]), $texte);
 			}
 
