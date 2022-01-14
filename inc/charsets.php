@@ -437,7 +437,7 @@ function charset2unicode($texte, $charset = 'AUTO' /* $forcer: obsolete*/) {
 					}
 				}
 			}
-			if (isset($trans[$charset]) and count($trans[$charset])) {
+			if (isset($trans[$charset]) and is_countable($trans[$charset]) ? count($trans[$charset]) : 0) {
 				return str_replace(array_keys($trans[$charset]), array_values($trans[$charset]), $texte);
 			}
 
@@ -529,6 +529,7 @@ function unicode2charset($texte, $charset = 'AUTO') {
  *     Texte transformé dans le charset site
  **/
 function importer_charset($texte, $charset = 'AUTO') {
+	$s = null;
 	static $trans = [];
 	// on traite le cas le plus frequent iso-8859-1 vers utf directement pour aller plus vite !
 	if (($charset == 'iso-8859-1') && ($GLOBALS['meta']['charset'] == 'utf-8')) {
@@ -554,7 +555,7 @@ function importer_charset($texte, $charset = 'AUTO') {
 				}
 			}
 		}
-		if (count($trans[$charset])) {
+		if (is_countable($trans[$charset]) ? count($trans[$charset]) : 0) {
 			return str_replace(array_keys($trans[$charset]), array_values($trans[$charset]), $texte);
 		}
 
@@ -733,7 +734,7 @@ function caractere_utf_8($num) {
 	if ($num < 65536) {
 		return chr(($num >> 12) + 224) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
 	}
-	if ($num < 1114112) {
+	if ($num < 1_114_112) {
 		return chr(($num >> 18) + 240) . chr((($num >> 12) & 63) + 128) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
 	}
 
@@ -902,7 +903,7 @@ function translitteration($texte, $charset = 'AUTO', $complexe = '') {
 	$texte = corriger_caracteres($texte);
 
 	// 1. Passer le charset et les &eacute en utf-8
-	$texte = unicode_to_utf_8(html2unicode(charset2unicode($texte, $charset, true)));
+	$texte = unicode_to_utf_8(html2unicode(charset2unicode($texte, $charset)));
 
 	return translitteration_rapide($texte, $charset, $complexe);
 }
@@ -924,9 +925,7 @@ function translitteration_complexe($texte, $chiffres = false) {
 	if ($chiffres) {
 		$texte = preg_replace_callback(
 			"/[aeiuoyd]['`?~.^+(-]{1,2}/S",
-			function ($m) {
-			return translitteration_chiffree($m[0]);
-			},
+			fn($m) => translitteration_chiffree($m[0]),
 			$texte
 		);
 	}
