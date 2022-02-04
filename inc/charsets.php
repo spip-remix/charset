@@ -720,7 +720,7 @@ function utf_32_to_unicode($source) {
  *
  * @param int $num
  *    Numéro de l'entité unicode
- * @return char
+ * @return string
  *    Caractère utf8 si trouvé, '' sinon
  **/
 function caractere_utf_8($num) {
