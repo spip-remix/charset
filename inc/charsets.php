@@ -484,7 +484,6 @@ function unicode2charset($texte, $charset = 'AUTO') {
 	switch ($charset) {
 		case 'utf-8':
 			return unicode_to_utf_8($texte);
-			break;
 
 		default:
 			$charset = load_charset($charset);
