@@ -1098,7 +1098,7 @@ function spip_substr($c, $start = 0, $length = null) {
 		if ($length) {
 			return substr($c, $start, $length);
 		} else {
-			substr($c, $start);
+			return substr($c, $start);
 		}
 	}
 
