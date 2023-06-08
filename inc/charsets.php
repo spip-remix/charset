@@ -262,15 +262,15 @@ function html2unicode($texte, $secure = false) {
 		}
 	}
 
-	if ($secure) {
-		return str_replace(array_keys($trans), array_values($trans), $texte);
-	} else {
-		return str_replace(
+	$texte = str_replace(array_keys($trans), array_values($trans), $texte);
+	if (!$secure) {
+		$texte = str_replace(
 			['&amp;', '&quot;', '&lt;', '&gt;'],
 			['&', '"', '<', '>'],
-			str_replace(array_keys($trans), array_values($trans), $texte)
+			$texte
 		);
 	}
+	return $texte;
 }
 
 
