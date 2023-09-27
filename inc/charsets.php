@@ -250,11 +250,16 @@ function corriger_caracteres_windows($texte, $charset = 'AUTO', $charset_cible =
  * @return string
  *     texte converti
  **/
-function html2unicode($texte, $secure = false) {
+function html2unicode(string $texte, bool $secure = false): string {
+	static $trans = [];
+
+	if ($texte === null || $texte === '') {
+		return '';
+	}
 	if (!str_contains($texte, '&')) {
 		return $texte;
 	}
-	static $trans = [];
+
 	if (!$trans) {
 		load_charset('html');
 		foreach ($GLOBALS['CHARSET']['html'] as $key => $val) {
@@ -315,7 +320,7 @@ function mathml2unicode($texte) {
  * @return string
  *     texte converti en unicode
  **/
-function charset2unicode($texte, $charset = 'AUTO' /* $forcer: obsolete*/) {
+function charset2unicode(?string $texte, string $charset = 'AUTO' /* $forcer: obsolete*/) {
 	static $trans;
 
 	if ($texte === null || $texte === '') {
@@ -780,13 +785,13 @@ function javascript_to_binary($texte) {
  * @param string $complexe
  * @return string
  */
-function translitteration_rapide($texte, $charset = 'AUTO', $complexe = ''): string {
+function translitteration_rapide(?string $texte, string $charset = 'AUTO', string $complexe = ''): string {
 	static $trans = [];
 	if ($charset == 'AUTO') {
 		$charset = $GLOBALS['meta']['charset'];
 	}
-	if (!strlen($texte)) {
-		return $texte;
+	if ($texte === null || $texte === '') {
+		return '';
 	}
 
 	$table_translit = 'translit' . $complexe;
@@ -822,7 +827,11 @@ function translitteration_rapide($texte, $charset = 'AUTO', $complexe = ''): str
  * @param string $complexe
  * @return string
  */
-function translitteration($texte, $charset = 'AUTO', $complexe = ''): string {
+function translitteration(?string $texte, string $charset = 'AUTO', string $complexe = ''): string {
+	if ($texte === null || $texte === '') {
+		return '';
+	}
+
 	// 0. Supprimer les caracteres illegaux
 	include_spip('inc/filtres');
 	$texte = corriger_caracteres($texte);
@@ -844,7 +853,7 @@ function translitteration($texte, $charset = 'AUTO', $complexe = ''): string {
  * @param bool $chiffres
  * @return string
  */
-function translitteration_complexe($texte, $chiffres = false): string {
+function translitteration_complexe(?string $texte, bool $chiffres = false): string {
 	$texte = translitteration($texte, 'AUTO', 'complexe');
 
 	if ($chiffres) {
@@ -866,7 +875,7 @@ function translitteration_complexe($texte, $chiffres = false): string {
  * @param string $car
  * @return string
  */
-function translitteration_chiffree($car): string {
+function translitteration_chiffree(string $car): string {
 	return strtr($car, "'`?~.^+(-", '123456789');
 }
 
