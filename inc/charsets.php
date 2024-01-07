@@ -92,7 +92,7 @@ function load_charset($charset = 'AUTO') {
 	if (find_in_path($charset . '.php', 'charsets/', true)) {
 		return $charset;
 	} else {
-		spip_log("Erreur: pas de fichier de conversion 'charsets/$charset'");
+		spip_logger()->info("Erreur: pas de fichier de conversion 'charsets/$charset'");
 		$GLOBALS['CHARSET'][$charset] = [];
 
 		return false;
@@ -385,7 +385,7 @@ function charset2unicode(?string $texte, string $charset = 'AUTO' /* $forcer: ob
 			}
 
 			// Au pire ne rien faire
-			spip_log("erreur charset '$charset' non supporte");
+			spip_logger()->info("erreur charset '$charset' non supporte");
 
 			return $texte;
 	}
@@ -959,7 +959,7 @@ function transcoder_page($texte, $headers = ''): string {
 
 	// Si tout est < 128 pas la peine d'aller plus loin
 	if (is_ascii($texte)) {
-		#spip_log('charset: ascii');
+		#spip_logger()->info('charset: ascii');
 		return $texte;
 	}
 
@@ -993,11 +993,11 @@ function transcoder_page($texte, $headers = ''): string {
 	}
 
 	if ($charset) {
-		spip_log("charset: $charset");
+		spip_logger()->info("charset: $charset");
 	} else {
 		// valeur par defaut
 		$charset = is_utf8($texte) ? 'utf-8' : 'iso-8859-1';
-		spip_log("charset probable: $charset");
+		spip_logger()->info("charset probable: $charset");
 	}
 
 	return importer_charset($texte, $charset);
