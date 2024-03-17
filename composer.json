@@ -1,0 +1,23 @@
+{
+    "name": "spip-remix/charset",
+    "description": "Gestion des charsets dans SPIP",
+    "license": "GPL-3.0-only",
+    "type": "library",
+    "authors": [
+        {
+            "name": "JamesRezo",
+            "email": "james@rezo.net"
+        }
+    ],
+    "require": {
+        "spip-remix/contracts": "^0.1.x-dev"
+    },
+    "require-dev": {
+        "spip-remix/sdk": "^0.1.X-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "SpipRemix\\Charset\\": "src/"
+        }
+    }
+}
